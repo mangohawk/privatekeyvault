@@ -1,0 +1,2 @@
+New-AzResourceGroupDeployment -ResourceGroupName rg-test -TemplateFile .\works.bicep -location northeurope
+New-AzResourceGroupDeployment -ResourceGroupName rg-test -TemplateFile .\bug.bicep -location northeurope
