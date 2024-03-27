@@ -22,6 +22,12 @@ resource readerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-0
   name: 'acdd72a7-3385-48ef-bd42-f606fba81ae7'
 }
 
+// Built-in Contributor Role Definition
+resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  scope: tenant()
+  name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+}
+
 // Built-in Key Vault Crypto Officer
 resource keyVaultCryptoOfficerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
   scope: tenant()
@@ -35,6 +41,17 @@ resource keyVaultCryptoOfficerRoleAssignment 'Microsoft.Authorization/roleAssign
   properties: {
     principalId: managedIdentity.properties.principalId
     roleDefinitionId: keyVaultCryptoOfficerRoleDefinition.id
+    principalType: 'ServicePrincipal'
+  }
+}
+
+// Role Assignment for Contributor
+resource contributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(contributorRoleDefinition.id, managedIdentity.id, keyVault.id)
+  scope: keyVault
+  properties: {
+    principalId: managedIdentity.properties.principalId
+    roleDefinitionId: contributorRoleDefinition.id
     principalType: 'ServicePrincipal'
   }
 }
@@ -148,6 +165,9 @@ resource virtualNetworkCompute 'Microsoft.Network/virtualNetworks@2023-06-01' = 
           serviceEndpoints: [
             {
               service: 'Microsoft.Storage'
+            }
+            {
+              service: 'Microsoft.KeyVault'
             }
           ]
           delegations: [
