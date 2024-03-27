@@ -201,7 +201,11 @@ resource virtualNetworkKeyvault 'Microsoft.Network/virtualNetworks@2023-06-01' =
           networkSecurityGroup: {
             id: networkSecurityGroup.id
           }
-          serviceEndpoints: []
+          serviceEndpoints: [
+            {
+              service: 'Microsoft.KeyVault'
+            }
+          ]
           delegations: []
           privateEndpointNetworkPolicies: 'Disabled'
           privateLinkServiceNetworkPolicies: 'Enabled'
