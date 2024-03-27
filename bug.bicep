@@ -387,6 +387,7 @@ resource deploymentScriptsPowershellUpload 'Microsoft.Resources/deploymentScript
     record
     virtualNetworkPeerings1
     virtualNetworkPeerings2
+    delay
   ]
   location: location
   identity: {
@@ -423,7 +424,7 @@ resource virtualNetworkPeerings1 'Microsoft.Network/virtualNetworks/virtualNetwo
   properties: {
     allowForwardedTraffic: false
     allowGatewayTransit: false
-    allowVirtualNetworkAccess: false
+    allowVirtualNetworkAccess: true
     doNotVerifyRemoteGateways: false
     remoteAddressSpace: {
       addressPrefixes: [
@@ -448,7 +449,7 @@ resource virtualNetworkPeerings2 'Microsoft.Network/virtualNetworks/virtualNetwo
   properties: {
     allowForwardedTraffic: false
     allowGatewayTransit: false
-    allowVirtualNetworkAccess: false
+    allowVirtualNetworkAccess: true
     doNotVerifyRemoteGateways: false
     remoteAddressSpace: {
       addressPrefixes: [
